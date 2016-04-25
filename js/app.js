@@ -1,17 +1,35 @@
 //the score at the begining of the game
 var score = 0;
 
+//constant variables to be used for the movement of the player
+var TILE_WIDTH = 101,
+    TILE_HEIGHT = 83;
+
+/** 
+Character superclass, which will cover common properties (x, y location and sprite) 
+and method (render) of Enemy and Player subcllasses 
+**/
+var Character = function (x, y, sprite) {
+	this.x = x;
+    this.y = y;
+	this.sprite = sprite;
+}
+// Draw the objects on the screen
+Character.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+};
+
 // Enemies our player must avoid
 var Enemy = function(x, y) {
-
-    // The image/sprite for our enemies, this uses
-    // a helper we've provided to easily load images
-    this.sprite = 'images/enemy-bug.png';
-    this.x = x;
-    this.y = y;
+	Character.call(this, x, y);
+    this.sprite = "images/enemy-bug.png";
     // randomly generates the speed of the enemies
     this.speed = Math.floor((Math.random() * 100) + 100);
 };
+
+//establishing inheritance from Character superclass
+Enemy.prototype = Object.create(Character.prototype);
+Enemy.prototype.constructor = Enemy;
 
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
@@ -35,27 +53,20 @@ Enemy.prototype.checkCollisions = function() {
     }
 };
 
-// Draw the enemy on the screen
-Enemy.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-};
-
 //the Player class - controlled by the user
-var Player = function(x, y, speed) {
-    this.sprite = 'images/char-cat-girl.png';
-    this.x = x;
-    this.y = y;
+var Player = function(x, y) {
+	Character.call(this, x, y);
+    this.sprite = "images/char-cat-girl.png";
+	this.speed = 100;
     this.width = 100;
     this.height = 83;
-}
-
-Player.prototype.update = function(dt) {
-    this.x * (dt);
-    this.y * (dt);
 };
 
-Player.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+//establishing inheritance from Character superclass
+Player.prototype = Object.create(Character.prototype);
+Player.prototype.constructor = Player;
+
+Player.prototype.update = function(dt) { 
 };
 
 // keyboard input handling player movements
@@ -63,30 +74,30 @@ Player.prototype.handleInput = function(allowedKeys) {
     switch (allowedKeys) {
         case "left":
             if (this.x >= 50) {
-                this.x -= 50;
+                this.x -= TILE_WIDTH;
             }
             break;
         case 'up':
-            if (this.y >= 40) {
-                this.y -= 45;
+            if (this.y >= 50) {
+                this.y -= TILE_HEIGHT;
             } else {
                 alert("You win!"); // the player wins if the avatar reaches the water
-                player.reset();
+                this.reset();
                 score += 10;
             }
             break;
         case 'right':
             if (this.x < 505 - this.width) {
-                this.x += 50;
+                this.x += TILE_WIDTH;
             }
             break;
         case 'down':
             if (this.y < 400) {
-                this.y += 45;
+                this.y += TILE_HEIGHT;
             } else if (this.y + this.height > 606) {
                 this.y = 400;
             } else {
-                player.reset();
+                this.y = this.y;
             }
             break;
     }
@@ -101,7 +112,8 @@ Player.prototype.reset = function() {
 // Now instantiate your objects.
 
 // Place the player object in a variable called player
-var player = new Player(207, 400, 100);
+var player = new Player(207, 400);
+console.log("player.x, player.y")
 // Place all enemy objects in an array called allEnemies
 var enemy1 = new Enemy(-200, 55);
 var enemy2 = new Enemy(-50, 140);
@@ -118,7 +130,6 @@ document.addEventListener('keyup', function(e) {
         39: 'right',
         40: 'down'
     };
-
     player.handleInput(allowedKeys[e.keyCode]);
 });
 

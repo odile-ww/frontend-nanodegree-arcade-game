@@ -86,7 +86,7 @@ var Engine = (function(global) {
 		enemy4.checkCollisions();
 		// make sure that once the score is updated, the text on the 
 		// canvas gets updated without being overwritten 
-		ctx.clearRect(0, 0, canvas.width, 30);
+		ctx.clearRect(0, 0, canvas.width, 80);
 		// calls the functions which draws the score on the screen
 		drawScore();
     }
