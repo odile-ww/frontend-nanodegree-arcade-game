@@ -80,7 +80,15 @@ var Engine = (function(global) {
      */
     function update(dt) {
         updateEntities(dt);
-        // checkCollisions();
+        enemy1.checkCollisions();
+		enemy2.checkCollisions();
+		enemy3.checkCollisions();
+		enemy4.checkCollisions();
+		// make sure that once the score is updated, the text on the 
+		// canvas gets updated without being overwritten 
+		ctx.clearRect(0, 0, canvas.width, 30);
+		// calls the functions which draws the score on the screen
+		drawScore();
     }
 
     /* This is called by the update function and loops through all of the
@@ -171,7 +179,7 @@ var Engine = (function(global) {
         'images/water-block.png',
         'images/grass-block.png',
         'images/enemy-bug.png',
-        'images/char-boy.png'
+        'images/char-cat-girl.png'
     ]);
     Resources.onReady(init);
 
