@@ -47,7 +47,7 @@ Enemy.prototype.update = function(dt) {
 
 // Collision detection
 Enemy.prototype.checkCollisions = function() {
-    if (this.x < player.x + player.width / 2 && this.x + 40 > player.x && this.y < player.y + player.height / 2 && this.y + 40 > player.y) {
+    if (this.x < player.x + (player.width / 4) && this.x + 25 > player.x && this.y < player.y + (player.height / 4) && this.y + 25 > player.y) {
         player.reset();
         score = 0;
         alert("You hit a bug. Try Again!");
