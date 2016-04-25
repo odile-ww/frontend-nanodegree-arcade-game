@@ -13,7 +13,8 @@ var Character = function (x, y, sprite) {
 	this.x = x;
     this.y = y;
 	this.sprite = sprite;
-}
+};
+
 // Draw the objects on the screen
 Character.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
