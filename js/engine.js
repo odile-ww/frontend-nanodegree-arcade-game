@@ -25,7 +25,7 @@ var Engine = (function(global) {
         ctx = canvas.getContext('2d'),
         lastTime;
 
-    canvas.width = 505;
+    canvas.width = 707;
     canvas.height = 606;
     doc.body.appendChild(canvas);
 
@@ -81,9 +81,9 @@ var Engine = (function(global) {
     function update(dt) {
         updateEntities(dt);
         enemy1.checkCollisions();
-		enemy2.checkCollisions();
-		enemy3.checkCollisions();
-		enemy4.checkCollisions();
+        enemy2.checkCollisions();
+        enemy3.checkCollisions();
+        enemy4.checkCollisions();
 		// make sure that once the score is updated, the text on the 
 		// canvas gets updated without being overwritten 
 		ctx.clearRect(0, 0, canvas.width, 80);
@@ -124,7 +124,7 @@ var Engine = (function(global) {
                 'images/grass-block.png'    // Row 2 of 2 of grass
             ],
             numRows = 6,
-            numCols = 5,
+            numCols = 7,
             row, col;
 
         /* Loop through the number of rows and columns we've defined above

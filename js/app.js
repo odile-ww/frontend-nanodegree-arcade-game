@@ -5,6 +5,7 @@ var score = 0;
 var TILE_WIDTH = 101,
     TILE_HEIGHT = 83;
 
+var feedback = document.querySelector("#feedback");
 /** 
 Character superclass, which will cover common properties (x, y location and sprite) 
 and method (render) of Enemy and Player subcllasses 
@@ -25,7 +26,7 @@ var Enemy = function(x, y) {
 	Character.call(this, x, y);
     this.sprite = "images/enemy-bug.png";
     // randomly generates the speed of the enemies
-    this.speed = Math.floor((Math.random() * 100) + 100);
+    this.speed = Math.floor((Math.random() * 150) + 100);
 };
 
 //establishing inheritance from Character superclass
@@ -37,7 +38,7 @@ Enemy.prototype.constructor = Enemy;
 Enemy.prototype.update = function(dt) {
     //when bugs reach the end of the canvas
     //they respawn randomly on the left of it 
-    if (this.x > 505) {
+    if (this.x > 707) {
         this.x = Math.random() * -200;
     }
     // movement gets multiplied by the dt parameter
@@ -49,8 +50,14 @@ Enemy.prototype.update = function(dt) {
 Enemy.prototype.checkCollisions = function() {
     if (this.x < player.x + (player.width / 4) && this.x + 25 > player.x && this.y < player.y + (player.height / 4) && this.y + 25 > player.y) {
         player.reset();
-        score = 0;
-        alert("You hit a bug. Try Again!");
+        feedback.textContent = "Oh no! you hit a bug. Try Again!";
+        feedback.style.color = "red";
+        if (score > 0) {
+            score -=10;
+        } else {
+            score = 0;
+        }
+        
     }
 };
 
@@ -79,16 +86,18 @@ Player.prototype.handleInput = function(allowedKeys) {
             }
             break;
         case 'up':
-            if (this.y >= 50) {
+            if (this.y >= 80) {
                 this.y -= TILE_HEIGHT;
             } else {
-                alert("You win!"); // the player wins if the avatar reaches the water
+                 // the player wins if the avatar reaches the water
                 this.reset();
                 score += 10;
+                feedback.textContent = "You win!";
+                feedback.style.color = "green";
             }
             break;
         case 'right':
-            if (this.x < 505 - this.width) {
+            if (this.x < 707 - this.width) {
                 this.x += TILE_WIDTH;
             }
             break;
@@ -106,16 +115,18 @@ Player.prototype.handleInput = function(allowedKeys) {
 
 // method that resets player's position upon winning or hitting a bug
 Player.prototype.reset = function() {
-    this.x = 207;
+    this.x = 307;
     this.y = 400;
 };
 
 // Now instantiate your objects.
 
 // Place the player object in a variable called player
-var player = new Player(207, 400);
+var player = new Player(307, 400);
 console.log("player.x, player.y")
+
 // Place all enemy objects in an array called allEnemies
+allEnemies = [];
 var enemy1 = new Enemy(-200, 55);
 var enemy2 = new Enemy(-50, 140);
 var enemy3 = new Enemy(-100, 230);
@@ -138,5 +149,5 @@ document.addEventListener('keyup', function(e) {
 function drawScore() {
     ctx.font = "24px Comic Sans MS";
     ctx.fillStyle = "#006699";
-    ctx.fillText("Score: " + score, 202, 25);
+    ctx.fillText("Score: " + score, 303, 25);
 }
