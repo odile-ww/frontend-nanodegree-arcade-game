@@ -80,10 +80,9 @@ var Engine = (function(global) {
      */
     function update(dt) {
         updateEntities(dt);
-        enemy1.checkCollisions();
-        enemy2.checkCollisions();
-        enemy3.checkCollisions();
-        enemy4.checkCollisions();
+        for (i = 0; i < allEnemies.length; i++) {
+            allEnemies[i].checkCollisions();
+        }
 		// make sure that once the score is updated, the text on the 
 		// canvas gets updated without being overwritten 
 		ctx.clearRect(0, 0, canvas.width, 80);

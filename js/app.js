@@ -123,7 +123,6 @@ Player.prototype.reset = function() {
 
 // Place the player object in a variable called player
 var player = new Player(307, 400);
-console.log("player.x, player.y")
 
 // Place all enemy objects in an array called allEnemies
 allEnemies = [];
@@ -131,6 +130,8 @@ var enemy1 = new Enemy(-200, 55);
 var enemy2 = new Enemy(-50, 140);
 var enemy3 = new Enemy(-100, 230);
 var enemy4 = new Enemy(-400, 300);
+var enemy5 = new Enemy(-400, 55);
+var enemy6 = new Enemy(-300, 230);
 var allEnemies = [enemy1, enemy2, enemy3, enemy4];
 
 // This listens for key presses and sends the keys to your
@@ -147,7 +148,7 @@ document.addEventListener('keyup', function(e) {
 
 //function to draw the score on the canvas
 function drawScore() {
-    ctx.font = "24px Comic Sans MS";
+    ctx.font = "24px 'Trebuchet MS'";
     ctx.fillStyle = "#006699";
     ctx.fillText("Score: " + score, 303, 25);
 }
